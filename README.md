@@ -1,5 +1,4 @@
-# lab-strain-resequencing-pipeline
-# Pipeline for internal lab resequencing projects
+#Pipeline for Oxford nanopore Kit12 chemistry 
 
 This is a pipeline that will: 
 - Take raw fast5 data from Oxford Nanopore Kit12 chemistry 
@@ -41,8 +40,6 @@ tar -xvzf <file_name>
 
 This database will require at least **60GB** of RAM to run, download one of the smaller standard databases if this is not practical for you (you will lose some sensitivity) 
 
-The conda environment *MUST* be activated before submitting the job to iridis5
-
 ## Basecalling and computation step-1:
 
 The pipeline will be expecting two columns of information for the basecalling step and the first computation step.
@@ -51,7 +48,7 @@ The layout should be the sample names in the first column and the barcode number
 
 Do not include table headers
 
-Example below: This can be copy and pasted straight from excel into the text editor you want to use (I use emacs). It does not matter if the names and numbers are not perfectly aligned provided they are seperated by a 'tab'
+Example below: This can be copy and pasted straight from excel into the text editor you want to use.
 
 |strain | barcode|
 |---|---|
@@ -79,11 +76,11 @@ Example below: This can be copy and pasted straight from excel into the text edi
 
 For the first basecalling step, which automatically includes the first the computation step use the below format replacing the words surrounded by <  > for the actual information 
 ```
-sbatch Seq_pipeline_basecalling.sh <sample name and barcode file> <basecalling yes/no> <path to fast5 (if basecalling, if not just type 'no')> <path to kraken database> <path to barcodes or desired barcode folder save location>
+bash Seq_pipeline_basecalling.sh <sample name and barcode file> <basecalling yes/no> <path to fast5 (if basecalling, if not just type 'no')> <path to kraken database> <path to barcodes or desired barcode folder save location>
 ```
 e.g. 
 ```bash
-sbatch Seq_pipeline_basecalling.sh Batch_1.txt yes raw_data/fast5 kraken_database barcoded
+bash Seq_pipeline_basecalling.sh Batch_1.txt yes raw_data/fast5 kraken_database barcoded
 ```
 The basecalling will take several hours 
 
@@ -93,9 +90,7 @@ The ultimate outputs are:
 - Kraken report files that when loaded into pavian will tell you the taxonomy of the sample
 - Genome assemblies of the samples
 
-Pavian is piece of software that runs in **R**, please see seperate instructions titled **'Pavian_install.txt'** for more info
-
-It is important to view the kraken reports before continuing to the 'best contig' step, as we must know what the organism is to determine the expected size of the contig from the assembly 
+It is important to view the kraken reports before continuing to the 'best contig' step, as we must know what the organism is to determine the expected size of the contig from the assembly. This will be visible in the file **'Kraken_species_info.txt'** 
 
 There will be a file produced at the end of the genome assembly step that will show all the assembly_info reports together. This will be titled **'All_assembly_info_summary.txt'**
 
@@ -132,6 +127,6 @@ With this information, you can update the best_contig column on the excel spread
 
 Computation step 2 can be run on the login node and will export the best contig into a single .fasta file that can be used for downstream processing 
 ```bash
-Seq_pipeline_computation_step-2.sh <list with strain name, barcode and best contig>
+bash Seq_pipeline_computation_step-2.sh <list with strain name, barcode and best contig>
 ```
 This will be exported to the directory 'best_contigs'
