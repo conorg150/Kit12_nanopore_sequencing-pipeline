@@ -1,18 +1,5 @@
 #!/bin/bash
 
-#SBATCH --time=48:00:00
-# mail alert at start, end and abortion of execution
-#SBATCH --mail-type=ALL
-# send mail to this address
-#SBATCH --mail-user=server.outputs@gmail.com
-#SBATCH --nodes=1
-#SBATCH -p gpu
-#SBATCH --gres=gpu:2
-
-module load ont-guppy #Loads guppy into iridis5 
-
-module load cuda #Loads cuda libraries 
-
 #bash Seq_pipeline_basecalling.sh <sample name and barcode file> <basecalling yes/no> <path to fast5 (if basecalling, if not just type 'no')> <path to kraken database> <path to barcodes or desired barcode folder save location>
 
 list=$(cut -f 1 < $1)
@@ -56,4 +43,4 @@ else
     sbatch Seq_pipeline_computation.sh $list1 no $Path_to_fast5 $Path_to_kraken_database $barcodeDir 
 fi
 
-sbatch Seq_pipeline_computation.sh $list1 no $Path_to_fast5 $Path_to_kraken_database $barcodeDir #Takes the data forward from this step into the computation step (different steps as the compute capacity of the gpu nodes is very low)
+bash Seq_pipeline_computation.sh $list1 no $Path_to_fast5 $Path_to_kraken_database $barcodeDir #Takes the data forward from this step into the computation step (different steps as the compute capacity of the gpu nodes is very low)
