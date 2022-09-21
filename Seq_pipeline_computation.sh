@@ -1,13 +1,5 @@
 #!/bin/bash
 
-#SBATCH --time=48:00:00
-# mail alert at start, end and abortion of execution
-#SBATCH --mail-type=ALL
-# send mail to this address
-#SBATCH --mail-user=server.outputs@gmail.com
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=40
-
 #bash Seq_pipeline_computation.sh <sample name and barcode file> <basecalling yes/no> <path to fast5 (if basecalling)> <path to kraken database> <path to barcodes or desired barcode folder save location>
 
 list=$(cut -f 1 < $1)
@@ -98,7 +90,7 @@ echo -e 'assembling genomes using flye...\n'
 
 #Assembles genome using the flye assembler. contiguity may improve by altering certain settings (especially minimum read length), but probably not worth it for this project
 for i in $list ; do
-    flye --nano-hq $i/$i-all.fastq --out-dir $i/$i-genome --genome-size 7m --threads 40 --iterations 3 --meta  #40 threads for IRIDIS
+    flye --nano-hq $i/$i-all.fastq --out-dir $i/$i-genome --genome-size 7m --threads 40 --iterations 3 --meta  #40 threads set as default
 done
 
 echo -e 'printing single circular contigs...\n'
