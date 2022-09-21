@@ -1,13 +1,5 @@
 #!/bin/bash
 
-#SBATCH --time=48:00:00
-# mail alert at start, end and abortion of execution
-#SBATCH --mail-type=ALL
-# send mail to this address
-#SBATCH --mail-user=server.outputs@gmail.com
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=40
-
 # USAGE:
 # bash Seq_pipeline_computation_step-2.sh <sample name and barcode file with best contig> 
 
