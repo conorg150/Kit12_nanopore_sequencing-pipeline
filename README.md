@@ -1,4 +1,4 @@
-#Pipeline for Oxford nanopore Kit12 chemistry 
+# Pipeline for Oxford nanopore Kit12 chemistry 
 
 This is a pipeline that will: 
 - Take raw fast5 data from Oxford Nanopore Kit12 chemistry 
