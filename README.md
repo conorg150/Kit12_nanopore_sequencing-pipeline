@@ -125,8 +125,8 @@ With this information, you can update the best_contig column on the excel spread
 
 ## Computation step 2:
 
-Computation step 2 can be run on the login node and will export the best contig into a single .fasta file that can be used for downstream processing 
+Computation step 2 will export the best contig into a single .fasta file that can be used for downstream processing 
 ```bash
-bash Seq_pipeline_computation_step-2.sh <list with strain name, barcode and best contig>
+bash Seq_pipeline_computation_step-2.sh <list with strain name, barcode and best contig> <Plasmid/Genome>
 ```
 This will be exported to the directory 'best_contigs'
